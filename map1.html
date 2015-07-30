@@ -14,7 +14,7 @@
     <div id="map"><img src="img/fallback1.png" alt="[Map]" />
     </div>
     <div class="footnote">
-        <p><b>Source</b>: Urban Institute, 2015
+        <p><b>Source</b>: <a href="http://www.census.gov/did/www/saipe/data/statecounty/data/2013.html">Census Bureau Small Area Income and Poverty Estimates</a>
             <a href="http://www.urban.org" target="_blank" class="urban"><span style="color:#1696d2">Urban</span> <span style="color:#000">Institute</span></a>
         </p>
     </div>
@@ -24,14 +24,15 @@
     <script src="lib/modernizr.svg.min.js"></script>
     <script src="lib/topojson.v1.min.js"></script>
     <script src="lib/pym.min.js"></script>
-    <script src="js/responsive-map.js"></script>
+    <script src="js/urbanmap.js"></script>
 
     <script>
         data_url = "data/pov13_counties.csv",
             valuetomap = "pov",
             countyid = "countyfip",
-            breaks = [0.08,0.16,0.24,0.32],
-            legend_breaks = [0, 0.08,0.16,0.24,0.32, 1.0];
+            colors = ['rgb(247,251,255)','rgb(222,235,247)','rgb(198,219,239)','rgb(158,202,225)','rgb(107,174,214)','rgb(66,146,198)','rgb(33,113,181)','rgb(8,81,156)','rgb(8,48,107)'],
+            breaks = [0.05,0.1,0.15,0.2,0.25,0.3,0.35, 0.4],
+            legend_breaks = breaks;
 
         var pymChild = new pym.Child();
     </script>
