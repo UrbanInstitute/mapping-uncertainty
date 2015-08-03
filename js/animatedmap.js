@@ -80,7 +80,7 @@ function urbanmap(container_width) {
         legend.append("text")
             .data(legend_breaks)
             .attr("x", function (d, i) {
-                return (i * ls_w) + lp_w - 15;
+                return (i * ls_w) + lp_w - 12;
             })
             .attr("y", 15)
             .text(function (d, i) {
@@ -95,7 +95,7 @@ function urbanmap(container_width) {
         legend.append("text")
             .data(legend_breaks)
             .attr("x", function (d, i) {
-                return (i * ls_w) + lp_w + ls_w - 15;
+                return (i * ls_w) + lp_w + ls_w - 12;
             })
             .attr("y", 15)
             .text(function (d, i) {
