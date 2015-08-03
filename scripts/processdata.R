@@ -6,10 +6,10 @@
 require(dplyr)
 
 dt<-read.csv("data/poverty2013.csv",header=T, stringsAsFactors = FALSE)
-dt$countyfip<-paste(dt$statefip, formatC(dt$county, width=3, flag="0"), sep="")
+dt$id<-paste(dt$statefip, formatC(dt$county, width=3, flag="0"), sep="")
 dt<-dt %>% arrange(statefip,county) %>%
   mutate(pov = poverty_pct/100, pov_lo = poverty_lo/100, pov_hi = poverty_hi/100, margin = pov - pov_lo) %>%
-  select( -c(poverty_lo,poverty_hi,poverty_pct)) %>% select(countyfip,everything())
+  select( -c(poverty_lo,poverty_hi,poverty_pct)) %>% select(id,everything())
 
 #Save separate state/national and county CSVs
 states<-filter(dt,county==0)

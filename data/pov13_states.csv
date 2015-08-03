@@ -1,4 +1,4 @@
-"countyfip","statefip","county","state","countyname","povn","povn_lo","povn_hi","pov","pov_lo","pov_hi","margin"
+"id","statefip","county","state","countyname","povn","povn_lo","povn_hi","pov","pov_lo","pov_hi","margin"
 "0000",0,0,"US","United States",48810868,48554692,49067044,0.158,0.157,0.159,0.001
 "1000",1,0,"AL","Alabama",889091,873141,905041,0.189,0.186,0.192,0.00299999999999995
 "2000",2,0,"AK","Alaska",72643,69056,76230,0.101,0.096,0.106,0.00499999999999999

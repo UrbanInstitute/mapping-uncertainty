@@ -55,18 +55,20 @@ var us,
     mobile_threshold = 600,
     map_aspect_width = 1.7,
     map_aspect_height = 1,
-    json_url = "data/us-named.json",
-    colors = palette.blue5,
-    breaks = [0.2, 0.4, 0.6, 0.8],
-    legend_breaks = [0, 0.2, 0.4, 0.6, 0.8, 1.0],
+    json_url = "data/countypov.json",
+    colors = ['rgb(247,251,255)', 'rgb(222,235,247)', 'rgb(198,219,239)', 'rgb(158,202,225)', 'rgb(107,174,214)', 'rgb(66,146,198)', 'rgb(33,113,181)', 'rgb(8,81,156)', 'rgb(8,48,107)'],
+    breaks = [0.05, 0.1, 0.15, 0.2, 0.25, 0.3, 0.35, 0.4],
+    legend_breaks = breaks,
     formatter = d3.format("%"),
     missingcolor = "#ccc",
     nullcondition = "",
     value = {},
+    hi = {},
+    lo = {},
     data_url,
-    valuetomap,
     countyid,
     pymchild = null;
+
 
 function urbanmap(container_width) {
     if (container_width == undefined || isNaN(container_width)) {
@@ -117,12 +119,12 @@ function urbanmap(container_width) {
         .attr("transform", "translate(" + marginl.left + "," + marginl.top + ")");
 
     if ($legend.width() < mobile_threshold) {
-        var lp_w = 10,
-            ls_w = 40,
+        var lp_w = 0,
+            ls_w = ((width - 10) / colors.length),
             ls_h = 18;
     } else {
         var lp_w = (3 * width / 5),
-            ls_w = 40,
+            ls_w = 30,
             ls_h = 18;
     }
 
@@ -178,24 +180,28 @@ function urbanmap(container_width) {
     var path = d3.geo.path()
         .projection(projection);
 
+    function randomize() {
+        return Math.floor(Math.random() * (hi[d.id] - lo[d.id] + 1)) + lo[d.id];
+    }
+
     svg.selectAll("path")
         .data(topojson.feature(us, us.objects.counties).features)
         .enter().append("path")
         .attr("class", "counties")
         .attr("d", path)
         .style("fill", function (d) {
-            if (value[d.id] != null) {
-                return color(value[d.id]);
+            if (d.properties.pov != null) {
+                return color(d.properties.pov);
             } else {
                 return missingcolor;
             }
         })
         .call(d3.helper.tooltip(
             function (d, i) {
-                if (value[d.id] == null) {
+                if (d.properties.pov == null) {
                     return "<b>" + d.properties.name + "</b></br> No data";
                 } else {
-                    return "<b>" + d.properties.name + "</b></br>" + formatter(value[d.id]);
+                    return "<b>" + d.properties.name + "</b></br>" + formatter(d.properties.pov) + "</br>MOE: " + formatter(d.properties.margin);
                 }
             }
         ));
@@ -215,22 +221,11 @@ function urbanmap(container_width) {
 $(window).load(function () {
     if (Modernizr.svg) {
         d3.json(json_url, function (json) {
-            d3.csv(data_url, function (data) {
-                us = json;
+            us = json;
 
-                data.forEach(function (d) {
-                    d[countyid] = +d[countyid];
-                    if (d[valuetomap] == nullcondition) {
-                        value[d[countyid]] = null;
-                    } else {
-                        value[d[countyid]] = +d[valuetomap];
-                    }
-                });
-
-                pymChild = new pym.Child({
-                    renderCallback: urbanmap
-                });
-            })
+            pymChild = new pym.Child({
+                renderCallback: urbanmap
+            });
         });
     } else {
         pymChild = new pym.Child({});

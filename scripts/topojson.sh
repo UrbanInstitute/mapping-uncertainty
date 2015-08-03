@@ -1,0 +1,1 @@
+topojson -o data/countypov.json -e data/pov13_counties.csv --id-property=+id -p name,+pov,+pov_lo,+pov_hi,+margin -- data/us-named.json
