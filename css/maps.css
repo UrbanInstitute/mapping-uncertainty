@@ -13,6 +13,7 @@ p {
     margin-bottom: 0.5ex;
     font-size: 12px;
 }
+
 .footnote {
     font-size: 12px;
     padding-bottom: 1em;
@@ -22,6 +23,7 @@ p {
     margin-bottom: 1em;
     text-transform: uppercase;
 }
+
 a {
     color: #000;
     font-size: 12px;
@@ -54,7 +56,7 @@ a:active {
     text-transform: uppercase;
 }
 
-.urban{
+.urban {
     color: #1696d2;
     float: right;
     padding-right: 2px;
@@ -68,7 +70,15 @@ a:active {
     min-width: 350px;
 }
 
-.counties {
+.threshmaps {
+    display: inline-block;
+    width: 33%;
+    padding-bottom: 10px;
+}
+
+
+.counties,
+thresh {
     fill: none;
     stroke: none;
 }
@@ -78,6 +88,11 @@ path:hover {
     opacity: 1;
     stroke-width: 3px;
     cursor: pointer;
+}
+
+path.thresh {
+    stroke: none;
+    pointer-events: none;
 }
 
 .states {
@@ -116,4 +131,3 @@ path:hover {
     float: left;
     margin-right: 2px
 }
-
