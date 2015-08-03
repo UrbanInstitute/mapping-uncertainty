@@ -70,6 +70,9 @@ a:active {
     min-width: 350px;
 }
 
+#mapholder {
+    margin-top: 30px;
+}
 .threshmaps {
     display: inline-block;
     width: 33%;

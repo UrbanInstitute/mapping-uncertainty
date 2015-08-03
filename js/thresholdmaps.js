@@ -98,16 +98,19 @@ var valuetomap,
 
 function map_lo() {
     $map = $("#maplo");
+    valuetomap = "pov_lo",
     thresholdmap("#maplo");
 }
 
 function map_estimate() {
     $map = $("#mapest");
+    valuetomap = "pov",
     thresholdmap("#mapest");
 }
 
 function map_hi() {
     $map = $("#maphi");
+    valuetomap = "pov_hi",
     thresholdmap("#maphi");
 }
 
@@ -149,7 +152,7 @@ function thresholdmap(div) {
         .attr("d", path)
         .style("fill", function (d) {
             if (d.properties.pov != null) {
-                return color(d.properties.pov_lo);
+                return color(d.properties[valuetomap]);
             } else {
                 return missingcolor;
             }
