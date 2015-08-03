@@ -1,8 +1,17 @@
-//Urban map color palettes - will need updating
-var palette = {
-    blue5: ["#b0d5f1", "#82c4e9", "#1696d2", "#00578b", "#00152A"],
-    blue3: ["#b0d5f1", "#1696d2", "#00578b"]
-};
+var $map = $('#map');
+var $legend = $('#legend');
+var us,
+    mobile_threshold = 600,
+    map_aspect_width = 1.7,
+    map_aspect_height = 1,
+    json_url = "data/countypov.json",
+    colors = ['rgb(247,251,255)', 'rgb(222,235,247)', 'rgb(198,219,239)', 'rgb(158,202,225)', 'rgb(107,174,214)', 'rgb(66,146,198)', 'rgb(33,113,181)', 'rgb(8,81,156)', 'rgb(8,48,107)'],
+    breaks = [0.05, 0.1, 0.15, 0.2, 0.25, 0.3, 0.35, 0.4],
+    legend_breaks = breaks,
+    formatter = d3.format("%"),
+    missingcolor = "#ccc",
+    nullcondition = "",
+    pymchild = null;
 
 d3.helper = {};
 d3.helper.tooltip = function (accessor) {
@@ -47,27 +56,6 @@ d3.helper.tooltip = function (accessor) {
             });
     };
 };
-
-//defaults, and declare vars that will always need to be specified by user
-var $map = $('#map');
-var $legend = $('#legend');
-var us,
-    mobile_threshold = 600,
-    map_aspect_width = 1.7,
-    map_aspect_height = 1,
-    json_url = "data/countypov.json",
-    colors = ['rgb(247,251,255)', 'rgb(222,235,247)', 'rgb(198,219,239)', 'rgb(158,202,225)', 'rgb(107,174,214)', 'rgb(66,146,198)', 'rgb(33,113,181)', 'rgb(8,81,156)', 'rgb(8,48,107)'],
-    breaks = [0.05, 0.1, 0.15, 0.2, 0.25, 0.3, 0.35, 0.4],
-    legend_breaks = breaks,
-    formatter = d3.format("%"),
-    missingcolor = "#ccc",
-    nullcondition = "",
-    value = {},
-    hi = {},
-    lo = {},
-    data_url,
-    countyid,
-    pymchild = null;
 
 
 function urbanmap(container_width) {
@@ -180,15 +168,14 @@ function urbanmap(container_width) {
     var path = d3.geo.path()
         .projection(projection);
 
-    function randomize() {
-        return Math.floor(Math.random() * (hi[d.id] - lo[d.id] + 1)) + lo[d.id];
-    }
-
     svg.selectAll("path")
         .data(topojson.feature(us, us.objects.counties).features)
         .enter().append("path")
         .attr("class", "counties")
         .attr("d", path)
+        //        .attr("rand",  function (d) {
+        //                return randomize(d.properties.pov_hi, d.properties.pov_lo);
+        //        })
         .style("fill", function (d) {
             if (d.properties.pov != null) {
                 return color(d.properties.pov);
@@ -213,9 +200,25 @@ function urbanmap(container_width) {
         .enter().append("path")
         .attr("d", path);
 
+    function randmap(error, json) {
+        svg.selectAll("path")
+            .style("fill", function (d) {
+                return color(randomize(d.properties.pov_hi, d.properties.pov_lo));
+            })
+            .attr("d", path);
+    }
+    
+    $('button#randbtn').click(function (e) {
+        randmap();
+    });
+
     if (pymChild) {
         pymChild.sendHeight();
     }
+}
+
+function randomize(min, max) {
+    return Math.random() * (max - min) + min;
 }
 
 $(window).load(function () {

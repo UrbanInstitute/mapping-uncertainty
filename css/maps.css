@@ -44,6 +44,16 @@ a:active {
     text-decoration: underline;
 }
 
+.btn-start {
+    margin-top: 1em;
+    background-color: #1696d2;
+    color: #fff;
+    border-radius: 1px;
+    border-color: none;
+    line-height: 1;
+    text-transform: uppercase;
+}
+
 .urban{
     color: #1696d2;
     float: right;
