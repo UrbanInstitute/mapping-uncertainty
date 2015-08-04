@@ -13,6 +13,8 @@ var us,
     nullcondition = "",
     pymchild = null;
 
+var colors2 = ["#d0e8f2", "#c5e3f0", "#badeee", "#b0daec", "#a6d5ea", "#9bd0e8", "#90cbe6", "#85c6e3", "#7cc1e1", "#71bddf", "#67b9dd", "#5cb4db", "#53afda", "#49aad8", "#3fa5d6", "#35a1d4", "#2c9cd2", "#2497d0", "#228ec3", "#2085b7", "#1d7cab", "#1b749e", "#196b92", "#166286", "#14597a", "#12506e", "#104762", "#0e3e55", "#0b3549", "#092c3d", "#072330", "#051a24", "#031219", "#02090c", "#000000"];
+
 d3.helper = {};
 d3.helper.tooltip = function (accessor) {
     return function (selection) {
@@ -86,6 +88,10 @@ function urbanmap(container_width) {
     var color = d3.scale.threshold()
         .domain(breaks)
         .range(colors);
+
+    var colorScale = d3.scale.quantize()
+        .domain([0, 0.56])
+        .range(colors2);
 
     var marginl = {
         top: 5,
@@ -178,7 +184,7 @@ function urbanmap(container_width) {
         //        })
         .style("fill", function (d) {
             if (d.properties.pov != null) {
-                return color(d.properties.pov);
+                return colorScale(d.properties.pov);
             } else {
                 return missingcolor;
             }
@@ -199,6 +205,18 @@ function urbanmap(container_width) {
         .data(topojson.feature(us, us.objects.states).features)
         .enter().append("path")
         .attr("d", path);
+
+    function randmap(error, json) {
+        svg.selectAll("path")
+            .style("fill", function (d) {
+                return colorScale(randomize(d.properties.pov_hi, d.properties.pov_lo));
+            })
+            .attr("d", path);
+    }
+
+    $('button#randbtn').click(function (e) {
+        randmap();
+    });
 
     if (pymChild) {
         pymChild.sendHeight();

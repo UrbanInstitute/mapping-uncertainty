@@ -138,6 +138,26 @@ function urbanmap(container_width) {
                 return missingcolor;
             }
         });
+    //        .transition()
+    //        .duration(100)
+    //        .each(slide);
+    //
+    //    function slide() {
+    //            (function repeat() {
+    //                svg.selectAll("path")
+    //                    .transition()
+    //                    .duration(1000)
+    //                    .ease("linear")
+    //                    .style("fill", function (d) {
+    //                        if (d.properties.pov != null) {
+    //                            return color(randomize(d.properties.pov_hi, d.properties.pov_lo));
+    //                        } else {
+    //                            return missingcolor;
+    //                        }
+    //                    })
+    //                    .each("end", repeat);
+    //            })();
+    //        }
 
     recolor();
 
@@ -152,9 +172,9 @@ function urbanmap(container_width) {
                 } else {
                     return missingcolor;
                 }
-            });
+            })
+            .attr("d", path);
     }
-
     svg.append("g")
         .attr("class", "states")
         .selectAll("path")
