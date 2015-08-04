@@ -5,7 +5,7 @@ var us,
     map_aspect_width = 1.7,
     map_aspect_height = 1,
     json_url = "data/countypov.json",
-    colors = ['rgb(247,251,255)', 'rgb(222,235,247)', 'rgb(198,219,239)', 'rgb(158,202,225)', 'rgb(107,174,214)', 'rgb(66,146,198)', 'rgb(33,113,181)', 'rgb(8,81,156)', 'rgb(8,48,107)'],
+    //colors = ['rgb(247,251,255)', 'rgb(222,235,247)', 'rgb(198,219,239)', 'rgb(158,202,225)', 'rgb(107,174,214)', 'rgb(66,146,198)', 'rgb(33,113,181)', 'rgb(8,81,156)', 'rgb(8,48,107)'],
     breaks = [0.05, 0.1, 0.15, 0.2, 0.25, 0.3, 0.35, 0.4],
     legend_breaks = breaks,
     formatter = d3.format("%"),
@@ -13,7 +13,7 @@ var us,
     nullcondition = "",
     pymchild = null;
 
-var colors2 = ["#d0e8f2", "#c5e3f0", "#badeee", "#b0daec", "#a6d5ea", "#9bd0e8", "#90cbe6", "#85c6e3", "#7cc1e1", "#71bddf", "#67b9dd", "#5cb4db", "#53afda", "#49aad8", "#3fa5d6", "#35a1d4", "#2c9cd2", "#2497d0", "#228ec3", "#2085b7", "#1d7cab", "#1b749e", "#196b92", "#166286", "#14597a", "#12506e", "#104762", "#0e3e55", "#0b3549", "#092c3d", "#072330", "#051a24", "#031219", "#02090c", "#000000"];
+var colors = ["#d0e8f2", "#c5e3f0", "#badeee", "#b0daec", "#a6d5ea", "#9bd0e8", "#90cbe6", "#85c6e3", "#7cc1e1", "#71bddf", "#67b9dd", "#5cb4db", "#53afda", "#49aad8", "#3fa5d6", "#35a1d4", "#2c9cd2", "#2497d0", "#228ec3", "#2085b7", "#1d7cab", "#1b749e", "#196b92", "#166286", "#14597a", "#12506e", "#104762", "#0e3e55", "#0b3549", "#092c3d", "#072330", "#051a24", "#031219", "#02090c", "#000000"];
 
 d3.helper = {};
 d3.helper.tooltip = function (accessor) {
@@ -85,13 +85,13 @@ function urbanmap(container_width) {
         .append("g")
         .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
-    var color = d3.scale.threshold()
-        .domain(breaks)
-        .range(colors);
+    //    var color = d3.scale.threshold()
+    //        .domain(breaks)
+    //        .range(colors);
 
     var colorScale = d3.scale.quantize()
         .domain([0, 0.56])
-        .range(colors2);
+        .range(colors);
 
     var marginl = {
         top: 5,
@@ -118,41 +118,24 @@ function urbanmap(container_width) {
             ls_h = 18;
     } else {
         var lp_w = (3 * width / 5),
-            ls_w = 30,
+            ls_w = 6,
             ls_h = 18;
     }
 
-    if (legend_breaks.length > colors.length) {
-        var legend = lsvg.selectAll("g.legend")
-            .data(legend_breaks)
-            .enter().append("g")
-            .attr("class", "legend");
+    var legend = lsvg.selectAll("g.legend")
+        .data(colors)
+        .enter().append("g")
+        .attr("class", "legend");
 
-        legend.append("text")
-            .data(legend_breaks)
-            .attr("x", function (d, i) {
-                return (i * ls_w) + lp_w - 15;
-            })
-            .attr("y", 15)
-            .text(function (d, i) {
-                return formatter(d);
-            });
-    } else {
-        var legend = lsvg.selectAll("g.legend")
-            .data(colors)
-            .enter().append("g")
-            .attr("class", "legend");
-
-        legend.append("text")
-            .data(legend_breaks)
-            .attr("x", function (d, i) {
-                return (i * ls_w) + lp_w + ls_w - 15;
-            })
-            .attr("y", 15)
-            .text(function (d, i) {
-                return formatter(d);
-            });
-    }
+    lsvg.append("text")
+        .attr("x", lp_w)
+        .attr("y", 15)
+        .text("0%");
+    
+    lsvg.append("text")
+        .attr("x", lp_w + colors.length*ls_w - 20)
+        .attr("y", 15)
+        .text("56%");
 
     legend.append("rect")
         .data(colors)
