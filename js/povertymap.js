@@ -191,6 +191,8 @@ function urbanmap(container_width) {
 
     function randmap(error, json) {
         svg.selectAll("path")
+            .transition()
+            .duration(2000)
             .style("fill", function (d) {
                 return colorScale(randomize(d.properties.pov_hi, d.properties.pov_lo));
             })
@@ -198,7 +200,14 @@ function urbanmap(container_width) {
     }
 
     $('button#randbtn').click(function (e) {
-        randmap();
+        function timeout() {
+            setTimeout(function () {
+                randmap();
+                //infinite recursive loop, runs every 2.2 secs
+                timeout();
+            }, 2200);
+        }
+        timeout();    
     });
 
     if (pymChild) {
