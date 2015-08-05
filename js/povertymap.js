@@ -85,9 +85,9 @@ function urbanmap(container_width) {
         .append("g")
         .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
-    //    var color = d3.scale.threshold()
-    //        .domain(breaks)
-    //        .range(colors);
+    var color = d3.scale.threshold()
+        .domain(breaks)
+        .range(colors);
 
     var colorScale = d3.scale.quantize()
         .domain([0, 0.56])
@@ -131,9 +131,9 @@ function urbanmap(container_width) {
         .attr("x", lp_w)
         .attr("y", 15)
         .text("0%");
-    
+
     lsvg.append("text")
-        .attr("x", lp_w + colors.length*ls_w - 20)
+        .attr("x", lp_w + colors.length * ls_w - 20)
         .attr("y", 15)
         .text("56%");
 
@@ -192,7 +192,7 @@ function urbanmap(container_width) {
     function randmap(error, json) {
         svg.selectAll("path")
             .transition()
-            .duration(2000)
+            .duration(1000)
             .style("fill", function (d) {
                 return colorScale(randomize(d.properties.pov_hi, d.properties.pov_lo));
             })
@@ -205,9 +205,9 @@ function urbanmap(container_width) {
                 randmap();
                 //infinite recursive loop, runs every 2.2 secs
                 timeout();
-            }, 2200);
+            }, 1500);
         }
-        timeout();    
+        timeout();
     });
 
     if (pymChild) {
