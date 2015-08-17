@@ -1,12 +1,18 @@
 @import url("http://fonts.googleapis.com/css?family=Lato");
 body {
-    font-family: 'Lato', sans-serif;
-    color: #000;
+    font-family: Lato, sans-serif;
+    font-weight: 400;
+    font-size: 16px;
+    color: #333;
 }
 
-h2 {
-    font-size: 24px;
-    font-weight: 400;
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    color: #333;
 }
 
 p {
@@ -60,11 +66,19 @@ a:active {
     text-transform: uppercase;
 }
 
-.urban {
-    color: #1696d2;
+a.tag {
+    font-size: 9px;
     float: right;
-    padding-right: 2px;
-    text-transform: uppercase;
+    font-weight: 900;
+    letter-spacing: 1.5pt;
+    text-align: right;
+    bottom: 0px;
+    text-decoration: none;
+    color: inherit;
+}
+
+#urban {
+    color: #1696d2;
 }
 
 #map {
@@ -120,6 +134,7 @@ path.thresh {
 .urban-map-tooltip {
     padding: 10px;
     background-color: #fff;
+    font-size: 14px;
     color: #333;
     opacity: 0.85;
     border: 1px solid #aaa;
