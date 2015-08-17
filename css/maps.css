@@ -24,6 +24,10 @@ p {
     text-transform: uppercase;
 }
 
+.title {
+    text-align: center;
+}
+
 a {
     color: #000;
     font-size: 12px;
@@ -79,7 +83,9 @@ a:active {
     padding-bottom: 10px;
 }
 
-
+img {
+    width: 100%;
+}
 .counties,
 thresh {
     fill: none;
