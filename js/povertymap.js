@@ -2,11 +2,10 @@ var $map = $('#map');
 var $estimatemap = $('#estimatemap');
 var $legend = $('#legend');
 var us,
-    mobile_threshold = 500,
+    mobile_threshold = 400,
     map_aspect_width = 1.7,
     map_aspect_height = 1,
     json_url = "data/countypov.json",
-    //colors = ['rgb(247,251,255)', 'rgb(222,235,247)', 'rgb(198,219,239)', 'rgb(158,202,225)', 'rgb(107,174,214)', 'rgb(66,146,198)', 'rgb(33,113,181)', 'rgb(8,81,156)', 'rgb(8,48,107)'],
     breaks = [0.05, 0.1, 0.15, 0.2, 0.25, 0.3],
     legend_breaks = breaks,
     formatter = d3.format("%"),
@@ -73,10 +72,10 @@ function estimatemap(container_width) {
     }
 
     var margin = {
-        top: 2,
-        right: 10,
+        top: 10,
+        right: 5,
         bottom: 10,
-        left: 10
+        left: 5
     };
 
     var width = container_width - margin.left - margin.right;
@@ -96,10 +95,6 @@ function estimatemap(container_width) {
         .domain(breaks)
         .range(colors);
 
-    //var colorScale = d3.scale.quantize()
-    //    .domain([0, 0.56])
-    //    .range(colors);
-
     var marginl = {
         top: 5,
         right: 10,
@@ -107,15 +102,9 @@ function estimatemap(container_width) {
         left: 10
     };
 
-    if (container_width < mobile_threshold) {
-        marginl.bottom = 55;
-    } else {
-        marginl.bottom = 5;
-    }
-
     var lsvg = d3.select("#legend").append("svg")
         .attr("width", width + marginl.left + marginl.right)
-        .attr("height", 50 + marginl.top + marginl.bottom)
+        .attr("height", 55)
         .append("g")
         .attr("transform", "translate(" + marginl.left + "," + marginl.top + ")");
 
@@ -158,7 +147,7 @@ function estimatemap(container_width) {
         })
 
     var projection = d3.geo.albersUsa()
-        .scale(width * 1.25)
+        .scale(width * 1.3)
         .translate([width / 2, height / 2]);
 
     var path = d3.geo.path()
@@ -204,10 +193,10 @@ function animatedmap(container_width) {
     }
 
     var margin = {
-        top: 2,
-        right: 10,
+        top: 10,
+        right: 5,
         bottom: 10,
-        left: 10
+        left: 5
     };
 
     var width = container_width - margin.left - margin.right;
@@ -225,12 +214,8 @@ function animatedmap(container_width) {
         .domain(breaks)
         .range(colors);
 
-    //var colorScale = d3.scale.quantize()
-    //    .domain([0, 0.56])
-    //    .range(colors);
-
     var projection = d3.geo.albersUsa()
-        .scale(width * 1.25)
+        .scale(width * 1.3)
         .translate([width / 2, height / 2]);
 
     var path = d3.geo.path()
@@ -274,32 +259,6 @@ function animatedmap(container_width) {
         }, 1300);
     }
     timeout();
-
-//    $('button#randbtn').click(function (e) {
-//        if (randclick == true) {
-//            clearTimeout(animater);
-//
-//            //go back to estimate map      
-//            svg.selectAll("path")
-//                .transition()
-//                .duration(500)
-//                .style("fill", function (d) {
-//                    return colorScale(d.properties.pov);
-//
-//                })
-//                .attr("d", path);
-//
-//            randclick = false;
-//            console.log(randclick);
-//            d3.select(this).text("Randomize");
-//        } else {
-//            //randomize the colors within bounds
-//            timeout();
-//            randclick = true;
-//            console.log(randclick);
-//            d3.select(this).text("Show Estimate");
-//        }
-//    });
 
     if (pymChild) {
         pymChild.sendHeight();
