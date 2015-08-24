@@ -1,7 +1,8 @@
 var $map = $('#map');
+var $estimatemap = $('#estimatemap');
 var $legend = $('#legend');
 var us,
-    mobile_threshold = 600,
+    mobile_threshold = 500,
     map_aspect_width = 1.7,
     map_aspect_height = 1,
     json_url = "data/countypov.json",
@@ -65,8 +66,8 @@ d3.helper.tooltip = function (accessor) {
     };
 };
 
-
-function urbanmap(container_width) {
+//map of value estimate
+function estimatemap(container_width) {
     if (container_width == undefined || isNaN(container_width)) {
         container_width = 1300;
     }
@@ -123,8 +124,8 @@ function urbanmap(container_width) {
             ls_w = ((width - 50) / colors.length),
             ls_h = 18;
     } else {
-        var lp_w = (3 * width / 5),
-            ls_w = 9,
+        var lp_w = 30,
+            ls_w = 18,
             ls_h = 18;
     }
 
@@ -192,6 +193,69 @@ function urbanmap(container_width) {
         .enter().append("path")
         .attr("d", path);
 
+    if (pymChild) {
+        pymChild.sendHeight();
+    }
+}
+
+function animatedmap(container_width) {
+    if (container_width == undefined || isNaN(container_width)) {
+        container_width = 1300;
+    }
+
+    var margin = {
+        top: 2,
+        right: 10,
+        bottom: 10,
+        left: 10
+    };
+
+    var width = container_width - margin.left - margin.right;
+    var height = Math.ceil((width * map_aspect_height) / map_aspect_width) - margin.top - margin.bottom;
+
+    $map.empty();
+
+    var svg = d3.select("#map").append("svg")
+        .attr("width", width + margin.left + margin.right)
+        .attr("height", height + margin.top + margin.bottom)
+        .append("g")
+        .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+    var colorScale = d3.scale.threshold()
+        .domain(breaks)
+        .range(colors);
+
+    //var colorScale = d3.scale.quantize()
+    //    .domain([0, 0.56])
+    //    .range(colors);
+
+    var projection = d3.geo.albersUsa()
+        .scale(width * 1.25)
+        .translate([width / 2, height / 2]);
+
+    var path = d3.geo.path()
+        .projection(projection);
+
+    svg.selectAll("path")
+        .data(topojson.feature(us, us.objects.counties).features)
+        .enter().append("path")
+        .attr("class", "counties thresh")
+        .attr("d", path)
+        .style("fill", function (d) {
+            if (d.properties.pov != null) {
+                return colorScale(d.properties.pov);
+            } else {
+                return missingcolor;
+            }
+        });
+
+    svg.append("g")
+        .attr("class", "states")
+        .selectAll("path")
+        .data(topojson.feature(us, us.objects.states).features)
+        .enter().append("path")
+        .attr("d", path);
+
     function randmap(error, json) {
         svg.selectAll("path")
             .transition()
@@ -209,33 +273,33 @@ function urbanmap(container_width) {
             timeout();
         }, 1300);
     }
+    timeout();
 
-    console.log(randclick);
-    $('button#randbtn').click(function (e) {
-        if (randclick == true) {
-            clearTimeout(animater);
-
-            //go back to estimate map      
-            svg.selectAll("path")
-                .transition()
-                .duration(500)
-                .style("fill", function (d) {
-                    return colorScale(d.properties.pov);
-
-                })
-                .attr("d", path);
-
-            randclick = false;
-            console.log(randclick);
-            d3.select(this).text("Randomize");
-        } else {
-            //randomize the colors within bounds
-            timeout();
-            randclick = true;
-            console.log(randclick);
-            d3.select(this).text("Show Estimate");
-        }
-    });
+//    $('button#randbtn').click(function (e) {
+//        if (randclick == true) {
+//            clearTimeout(animater);
+//
+//            //go back to estimate map      
+//            svg.selectAll("path")
+//                .transition()
+//                .duration(500)
+//                .style("fill", function (d) {
+//                    return colorScale(d.properties.pov);
+//
+//                })
+//                .attr("d", path);
+//
+//            randclick = false;
+//            console.log(randclick);
+//            d3.select(this).text("Randomize");
+//        } else {
+//            //randomize the colors within bounds
+//            timeout();
+//            randclick = true;
+//            console.log(randclick);
+//            d3.select(this).text("Show Estimate");
+//        }
+//    });
 
     if (pymChild) {
         pymChild.sendHeight();
@@ -246,16 +310,3 @@ function randomize(min, max) {
     return Math.random() * (max - min) + min;
 }
 
-$(window).load(function () {
-    if (Modernizr.svg) {
-        d3.json(json_url, function (json) {
-            us = json;
-
-            pymChild = new pym.Child({
-                renderCallback: urbanmap
-            });
-        });
-    } else {
-        pymChild = new pym.Child({});
-    }
-});

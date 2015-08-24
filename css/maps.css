@@ -81,7 +81,7 @@ a.tag {
     color: #1696d2;
 }
 
-#map {
+.map {
     display: block;
     width: 100%;
     padding-bottom: 10px;
@@ -148,7 +148,6 @@ path.thresh {
     display: table;
     font-size: 12px;
     font-weight: 400;
-    margin-bottom: -40px;
 }
 
 .legend-item {

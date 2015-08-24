@@ -13,11 +13,11 @@
 </head>
 
 <body>
-
-    <!--div id="legend"></div-->
-    <h4 class="title">Estimated poverty rates</h4>
+    <!--button type="button" class="btn btn-start" id="randbtn">Randomize</button-->
+    <h4 class="title">Values randomized within margin of error</h4>
     <div id="map" class="map"><img src="img/fallback1.png" alt="[Map]" />
     </div>
+
 
     <script src="lib/jquery.min.js"></script>
     <script src="lib/bootstrap.min.js"></script>
@@ -34,7 +34,7 @@
                     us = json;
 
                     pymChild = new pym.Child({
-                        renderCallback: estimatemap
+                        renderCallback: animatedmap
                     });
                 });
             } else {
