@@ -6,7 +6,7 @@ var us,
     map_aspect_height = 1,
     json_url = "data/countypov.json",
     //colors = ['rgb(247,251,255)', 'rgb(222,235,247)', 'rgb(198,219,239)', 'rgb(158,202,225)', 'rgb(107,174,214)', 'rgb(66,146,198)', 'rgb(33,113,181)', 'rgb(8,81,156)', 'rgb(8,48,107)'],
-    breaks = [0.05, 0.1, 0.15, 0.2, 0.25, 0.3, 0.35],
+    breaks = [0.05, 0.1, 0.15, 0.2, 0.25, 0.3],
     legend_breaks = breaks,
     formatter = d3.format("%"),
     missingcolor = "#ccc",
@@ -17,9 +17,9 @@ var us,
 
 //var colors = ["#d0e8f2", "#c5e3f0", "#badeee", "#b0daec", "#a6d5ea", "#9bd0e8", "#90cbe6", "#85c6e3", "#7cc1e1", "#71bddf", "#67b9dd", "#5cb4db", "#53afda", "#49aad8", "#3fa5d6", "#35a1d4", "#2c9cd2", "#2497d0", "#228ec3", "#2085b7", "#1d7cab", "#1b749e", "#196b92", "#166286", "#14597a", "#12506e", "#104762", "#0e3e55", "#0b3549", "#092c3d", "#072330", "#051a24", "#031219", "#02090c", "#000000"];
 
-//var colors =["#CFE8F3","#A2D4EC","#73BFE2","#46ABDB","#1696D2","#12719E","#0A4C6A","#062635"];
+var colors =["#CFE8F3","#A2D4EC","#73BFE2","#46ABDB","#1696D2","#12719E","#0A4C6A","#062635"];
 
-var colors = ["#d0e8f2", "#badeee", "#a6d5ea", "#90cbe6", "#7cc1e1", "#67b9dd", "#53afda", "#3fa5d6", "#2c9cd2", "#228ec3", "#1d7cab", "#196b92", "#14597a", "#104762", "#0b3549", "#072330", "#031219"];
+//var colors = ["#d0e8f2", "#badeee", "#a6d5ea", "#90cbe6", "#7cc1e1", "#67b9dd", "#53afda", "#3fa5d6", "#2c9cd2", "#228ec3", "#1d7cab", "#196b92", "#14597a", "#104762", "#0b3549", "#072330", "#031219"];
 
 d3.helper = {};
 d3.helper.tooltip = function (accessor) {
@@ -91,13 +91,13 @@ function urbanmap(container_width) {
         .append("g")
         .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
-    var color = d3.scale.threshold()
+    var colorScale = d3.scale.threshold()
         .domain(breaks)
         .range(colors);
 
-    var colorScale = d3.scale.quantize()
-        .domain([0, 0.56])
-        .range(colors);
+    //var colorScale = d3.scale.quantize()
+    //    .domain([0, 0.56])
+    //    .range(colors);
 
     var marginl = {
         top: 5,
@@ -205,9 +205,9 @@ function urbanmap(container_width) {
     function timeout() {
         animater = setTimeout(function () {
             randmap();
-            //infinite recursive loop, runs every 2.2 secs
+            //infinite recursive loop
             timeout();
-        }, 1500);
+        }, 1300);
     }
 
     console.log(randclick);
