@@ -2,7 +2,7 @@ var $map = $('#map');
 var $estimatemap = $('#estimatemap');
 var $legend = $('#legend');
 var us,
-    mobile_threshold = 400,
+    mobile_threshold = 500,
     map_aspect_width = 1.7,
     map_aspect_height = 1,
     json_url = "data/countypov.json",
