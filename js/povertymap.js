@@ -6,7 +6,7 @@ var us,
     map_aspect_width = 1.7,
     map_aspect_height = 1,
     json_url = "data/countypov.json",
-    breaks = [0.05, 0.1, 0.15, 0.2, 0.25, 0.3],
+    breaks = [0.05, 0.1, 0.15, 0.2, 0.25, 0.3, 0.35],
     legend_breaks = breaks,
     formatter = d3.format("%"),
     missingcolor = "#ccc",
@@ -17,7 +17,7 @@ var us,
 
 //var colors = ["#d0e8f2", "#c5e3f0", "#badeee", "#b0daec", "#a6d5ea", "#9bd0e8", "#90cbe6", "#85c6e3", "#7cc1e1", "#71bddf", "#67b9dd", "#5cb4db", "#53afda", "#49aad8", "#3fa5d6", "#35a1d4", "#2c9cd2", "#2497d0", "#228ec3", "#2085b7", "#1d7cab", "#1b749e", "#196b92", "#166286", "#14597a", "#12506e", "#104762", "#0e3e55", "#0b3549", "#092c3d", "#072330", "#051a24", "#031219", "#02090c", "#000000"];
 
-var colors =["#CFE8F3","#A2D4EC","#73BFE2","#46ABDB","#1696D2","#12719E","#0A4C6A","#062635"];
+var colors = ["#CFE8F3", "#A2D4EC", "#73BFE2", "#46ABDB", "#1696D2", "#12719E", "#0A4C6A", "#062635"];
 
 //var colors = ["#d0e8f2", "#badeee", "#a6d5ea", "#90cbe6", "#7cc1e1", "#67b9dd", "#53afda", "#3fa5d6", "#2c9cd2", "#228ec3", "#1d7cab", "#196b92", "#14597a", "#104762", "#0b3549", "#072330", "#031219"];
 
@@ -109,12 +109,12 @@ function estimatemap(container_width) {
         .attr("transform", "translate(" + marginl.left + "," + marginl.top + ")");
 
     if ($legend.width() < mobile_threshold) {
-        var lp_w = 20,
-            ls_w = ((width - 50) / colors.length),
+        var lp_w = 0,
+            ls_w = ((width - 10) / colors.length),
             ls_h = 18;
     } else {
         var lp_w = 30,
-            ls_w = 18,
+            ls_w = 30,
             ls_h = 18;
     }
 
@@ -123,15 +123,15 @@ function estimatemap(container_width) {
         .enter().append("g")
         .attr("class", "legend");
 
-    lsvg.append("text")
-        .attr("x", lp_w - 20)
-        .attr("y", 15 + ls_h)
-        .text("0%");
-
-    lsvg.append("text")
-        .attr("x", lp_w + colors.length * ls_w + 2)
-        .attr("y", 15 + ls_h)
-        .text("56%");
+    legend.append("text")
+        .data(legend_breaks)
+        .attr("x", function (d, i) {
+            return (i * ls_w) + lp_w + ls_w - 15;
+        })
+        .attr("y", 15)
+        .text(function (d, i) {
+            return formatter(d);
+        });
 
     legend.append("rect")
         .data(colors)
@@ -258,7 +258,32 @@ function animatedmap(container_width) {
             timeout();
         }, 1300);
     }
-    timeout();
+    console.log(randclick);
+    $('button#randbtn').click(function (e) {
+        if (randclick == true) {
+            clearTimeout(animater);
+
+            //go back to estimate map      
+//            svg.selectAll("path")
+//                .transition()
+//                .duration(500)
+//                .style("fill", function (d) {
+//                    return colorScale(d.properties.pov);
+//
+//                })
+//                .attr("d", path);
+
+            randclick = false;
+            console.log(randclick);
+            d3.select(this).text("Play");
+        } else {
+            //randomize the colors within bounds
+            timeout();
+            randclick = true;
+            console.log(randclick);
+            d3.select(this).text("Pause");
+        }
+    });
 
     if (pymChild) {
         pymChild.sendHeight();
@@ -268,4 +293,3 @@ function animatedmap(container_width) {
 function randomize(min, max) {
     return Math.random() * (max - min) + min;
 }
-
