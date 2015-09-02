@@ -2,7 +2,7 @@ var $map = $('#map');
 var $estimatemap = $('#estimatemap');
 var $legend = $('#legend');
 var us,
-    mobile_threshold = 500,
+    mobile_threshold = 600,
     map_aspect_width = 1.7,
     map_aspect_height = 1,
     json_url = "data/countypov.json",
@@ -104,18 +104,18 @@ function estimatemap(container_width) {
 
     var lsvg = d3.select("#legend").append("svg")
         .attr("width", width + marginl.left + marginl.right)
-        .attr("height", 55)
+        .attr("height", 47 + marginl.top + marginl.bottom)
         .append("g")
         .attr("transform", "translate(" + marginl.left + "," + marginl.top + ")");
 
     if ($legend.width() < mobile_threshold) {
         var lp_w = 0,
             ls_w = ((width - 10) / colors.length),
-            ls_h = 18;
+            ls_h = 16;
     } else {
         var lp_w = 30,
-            ls_w = 30,
-            ls_h = 18;
+            ls_w = 43,
+            ls_h = 16;
     }
 
     var legend = lsvg.selectAll("g.legend")
@@ -126,7 +126,7 @@ function estimatemap(container_width) {
     legend.append("text")
         .data(legend_breaks)
         .attr("x", function (d, i) {
-            return (i * ls_w) + lp_w + ls_w - 15;
+            return (i * ls_w) + lp_w + ls_w - 12;
         })
         .attr("y", 15)
         .text(function (d, i) {
@@ -139,7 +139,7 @@ function estimatemap(container_width) {
             return (i * ls_w) + lp_w;
         })
         .attr("y", 20)
-        .attr("width", ls_w)
+        .attr("width", ls_w - 3)
         .attr("height", ls_h)
         .attr("z-index", 10)
         .style("fill", function (d, i) {
