@@ -9,69 +9,109 @@
 
     <link href='http://fonts.googleapis.com/css?family=Lato:300,400,600,700,900,300italic,400italic,700italic,900italic' rel='stylesheet' type='text/css'>
 
-    <link rel="stylesheet" type="text/css" href="css/urban-text.css">
-    <link rel="stylesheet" type="text/css" href="css/maps.css">
-    <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
-    
+    <!--link rel="stylesheet" type="text/css" href="css/urban-text.css"-->
+    <!--link rel="stylesheet" type="text/css" href="css/maps.css"-->
+
     <style>
-        .pym {
+        body {
+            font-family: Lato, sans-serif !important;
+            font-weight: 400;
+            font-size: 16px;
+            color: #666;
+        }
+        
+        #maps {
+            max-width: 1200px;
+        }
+        
+        #threshmaps {
+            background-image: url(img/threshmaps.png);
+            background-repeat: no-repeat;
             width: 100%;
+            height: 269px;
+        }
+        
+        .pym {
+            width: 49%;
+            display: inline-block;
             height: 100%;
             margin-bottom: 20px;
-            max-width: 1400px;
+        }
+        
+        .footnote {
+            font-size: 12px;
+            padding-bottom: 2em;
+        }
+        
+        .links {
+            margin-bottom: 1em;
+            text-transform: uppercase;
+        }
+        
+        .title {
+            text-align: center;
+        }
+        
+        a.tag {
+            font-size: 9px;
+            float: right;
+            font-weight: 900;
+            letter-spacing: 1.5pt;
+            text-align: right;
+            bottom: 0px;
+            text-decoration: none;
+            color: inherit;
+        }
+        
+        #urban {
+            color: #1696d2;
+        }
+        
+        @media (max-width: 600px) {
+            #threshmaps {
+                background-image: url(img/threshmaps_stacked.png);
+                background-repeat: no-repeat;
+                width: auto;
+                height: 948px;
+            }
+        }
+        
+        @media (max-width: 900px) {
+            .pym {
+                width: 100%;
+                display: block;
+                height: 100%;
+                margin-bottom: 20px;
+            }
         }
     </style>
 </head>
 
 <body>
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-12">
-                <h1>Explaining Uncertainty with Poverty Rates</h1>
+    <h1>Explaining Uncertainty with Poverty Rates</h1>
 
-                <!--div id="animatedmap" class="pym"></div-->
+    <!--div id="animatedmap" class="pym"></div-->
 
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
 
-                <div class="col-md-6">
-                    <div id="povertymap" class="pym"></div>
-                </div>
-                <div class="col-md-6">
-                    <div id="animatedmap" class="pym"></div>
-                </div>
-
-                <div class="footnote">
-                    <b>Source</b>: <a target="_blank" href="http://www.census.gov/did/www/saipe/data/statecounty/data/2013.html">Census Bureau Small Area Income and Poverty Estimates</a>
-                    <a class="tag" target="_blank" href="http://www.urban.org/">
-                        <span id="urban">URBAN</span>&nbsp;INSTITUTE</a>
-                </div>
-
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-
-                <div id="mapholder">
-                    <div class="col-md-4">
-                        <h4 class="title">Lower Bound</h4>
-                        <img src="img/map_lo.png" alt="map of lower bound > 25% poverty, by county">
-                    </div>
-                    <div class="col-md-4">
-                        <h4 class="title">Estimate</h4>
-                        <img src="img/map_estimate.png" alt="map of estimate > 25% poverty, by county">
-                    </div>
-                    <div class="col-md-4">
-                        <h4 class="title">Upper Bound</h4>
-                        <img src="img/map_hi.png" alt="map of upper bound > 25% poverty, by county">
-                    </div>
-                </div>
-            </div>
-
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-
-        </div>
-    </div>
+    <div id="maps">
+        <div id="povertymap" class="pym"></div>
+        <div id="animatedmap" class="pym"></div>
     </div>
 
-    <script src="lib/jquery.min.js"></script>
-    <script src="lib/bootstrap.min.js"></script>
+    <div class="footnote">
+        <b>Source</b>: <a target="_blank" href="http://www.census.gov/did/www/saipe/data/statecounty/data/2013.html">Census Bureau Small Area Income and Poverty Estimates</a>
+        <a class="tag" target="_blank" href="http://www.urban.org/">
+            <span id="urban">URBAN</span>&nbsp;INSTITUTE</a>
+    </div>
+
+    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+
+    <div id="threshmaps">&nbsp;
+    </div>
+
+    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+
     <script src="lib/pym.min.js"></script>
 
     <!--script src="js/thresholdmaps.js"></script-->
