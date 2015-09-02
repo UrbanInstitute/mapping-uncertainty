@@ -38,7 +38,7 @@ d3.helper.tooltip = function (accessor) {
                         .style('position', 'absolute')
                         .style('z-index', 1001);
                 } else {
-                    tooltipDiv.style('left', (absoluteMousePos[0] - 150) + 'px')
+                    tooltipDiv.style('left', (absoluteMousePos[0] - 130) + 'px')
                         .style('top', (absoluteMousePos[1] - 45) + 'px')
                         .style('position', 'absolute')
                         .style('z-index', 1001);
@@ -53,7 +53,7 @@ d3.helper.tooltip = function (accessor) {
                     tooltipDiv.style('left', (absoluteMousePos[0]) + 'px')
                         .style('top', (absoluteMousePos[1] - 45) + 'px');
                 } else {
-                    tooltipDiv.style('left', (absoluteMousePos[0] - 150) + 'px')
+                    tooltipDiv.style('left', (absoluteMousePos[0] - 130) + 'px')
                         .style('top', (absoluteMousePos[1] - 45) + 'px');
                 }
                 var tooltipText = accessor(d, i) || '';
@@ -170,7 +170,7 @@ function estimatemap(container_width) {
                 if (d.properties.pov == null) {
                     return "<b>" + d.properties.name + "</b></br> No data";
                 } else {
-                    return "<b>" + d.properties.name + "</b></br>" + formatter(d.properties.pov) + "</br>MOE: " + formatter(d.properties.margin);
+                    return "<b>" + d.properties.name + "</b></br>Estimate: " + formatter(d.properties.pov) + "</br>Sampling error: " + formatter(d.properties.margin);
                 }
             }
         ));
