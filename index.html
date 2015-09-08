@@ -16,13 +16,9 @@
             font-size: 16px;
             color: #666;
         }
-        
-        #threshmaps {
-            background-image: url(img/threshmaps.png);
-            background-repeat: no-repeat;
-            width: 100%;
-            height: 269px;
-            background-size: contain;
+
+        #mainmaps {
+            max-width: 100%;
         }
         
         .pym {
@@ -58,11 +54,26 @@
         }
         
         @media (max-width: 600px) {
-            #threshmaps {
-                background-image: url(img/threshmaps_stacked.png);
-                background-repeat: no-repeat;
-                width: auto;
-                height: 948px;
+            #mainmaps {
+                display: none;
+                height: 0;
+                width: 0;
+                width: 0;
+            }
+            #mobilemaps {
+                max-width: 100%;
+            }
+        }
+        
+        @media (min-width: 601px) {
+            #mobilemaps {
+                display: none;
+                height: 0;
+                width: 0;
+                width: 0;
+            }
+            #mainmaps {
+                max-width: 100%;
             }
         }
         
@@ -112,8 +123,8 @@
 
     <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
 
-    <div id="threshmaps">&nbsp;
-    </div>
+    <img src="img/threshmaps.png" id="mainmaps" alt="three county-level maps: poverty rate of at least 25%, lower bound, estimate, and upper bound">
+    <img src="img/threshmaps_stacked.png" id="mobilemaps" alt="three county-level maps: poverty rate of at least 25%, lower bound, estimate, and upper bound">
 
     <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
 
